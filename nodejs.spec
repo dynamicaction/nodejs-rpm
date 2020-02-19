@@ -116,15 +116,15 @@ fi
 make binary %{?_smp_mflags}
 
 pushd $RPM_SOURCE_DIR
-mv $RPM_BUILD_DIR/%{_base}-v%{version}/%{_base}-v%{version}-linux-.tar.gz .
+mv $RPM_BUILD_DIR/%{_base}-v%{version}/%{_base}-v%{version}-linux-%{_node_arch}.tar.gz .
 rm -rf %{_base}-v%{version}
-tar zxvf %{_base}-v%{version}-linux-.tar.gz
+tar zxvf %{_base}-v%{version}-linux-%{_node_arch}.tar.gz
 popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir  -p $RPM_BUILD_ROOT%{_prefix}
-cp -Rp $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-/* $RPM_BUILD_ROOT%{_prefix}/
+cp -Rp $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-%{_node_arch}/* $RPM_BUILD_ROOT%{_prefix}/
 mkdir -p $RPM_BUILD_ROOT%{_defaultdocdir}/%{_base}-v%{version}/
 
 for file in CHANGELOG.md LICENSE README.md ; do
@@ -133,7 +133,7 @@ done
 mv $RPM_BUILD_ROOT%{_node_original_docdir}/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{_base}-v%{version}/
 rm -rf $RPM_BUILD_ROOT%{_node_original_docdir}
 mkdir -p $RPM_BUILD_ROOT%{_datarootdir}/%{_base}js
-mv $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-.tar.gz $RPM_BUILD_ROOT%{_datarootdir}/%{_base}js/
+mv $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-%{_node_arch}.tar.gz $RPM_BUILD_ROOT%{_datarootdir}/%{_base}js/
 
 # prefix all manpages with "npm-"
 pushd $RPM_BUILD_ROOT%{_libdir}/node_modules/npm/man/
@@ -152,7 +152,7 @@ popd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-rm -rf $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-
+rm -rf $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-%{_node_arch}
 
 %files
 %defattr(-,root,root,-)
@@ -165,7 +165,7 @@ rm -rf $RPM_SOURCE_DIR/%{_base}-v%{version}-linux-
 
 %files binary
 %defattr(-,root,root,-)
-%{_datarootdir}/%{_base}js/%{_base}-v%{version}-linux-.tar.gz
+%{_datarootdir}/%{_base}js/%{_base}-v%{version}-linux-%{_node_arch}.tar.gz
 
 %files npm
 %defattr(-,root,root,-)
