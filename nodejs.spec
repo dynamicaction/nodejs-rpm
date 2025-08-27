@@ -24,24 +24,23 @@ URL:           https://nodejs.org
 Source0:       %{url}/dist/v%{version}/%{_base}-v%{version}.tar.gz
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-tmp
 Prefix:        /usr
-BuildRequires: tar
+BuildRequires: python3
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: openssl-devel
 BuildRequires: libstdc++-devel
+BuildRequires: libicu-devel
+BuildRequires: openssl-devel
 BuildRequires: zlib-devel
-BuildRequires: gzip
-BuildRequires: python
 
-%{?el5:BuildRequires: python27}
+%{?el5:BuildRequires: python3}
 %{?el5:BuildRequires: redhat-rpm-config}
 
 Patch0: node-js.centos5.configure.patch
 Patch1: node-js.centos5.gyp.patch
 Patch2: node-js.centos5.icu.patch
 Patch3: node-js.v8_inspector.gyp.patch
-Patch4: node-js.node.gyp-python27.patch
+Patch4: node-js.node.gyp-python3.patch
 
 %description
 Node.js is a server-side JavaScript environment that uses an asynchronous event-driven model.
