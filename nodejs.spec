@@ -111,7 +111,7 @@ fi
     --shared-openssl \
     --shared-openssl-includes=%{_includedir} \
     --shared-zlib \
-    --shared-zlib-includes=%{_includedir}
+    --shared-zlib-includes=%{_includedir} \
     --without-snapshot
 make binary %{?_smp_mflags}
 
