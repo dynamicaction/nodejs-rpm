@@ -113,7 +113,7 @@ fi
     --shared-zlib \
     --shared-zlib-includes=%{_includedir} \
     --without-node-snapshot
-make binary %{?_smp_mflags}
+make %{?_smp_mflags}
 
 pushd $RPM_SOURCE_DIR
 mv $RPM_BUILD_DIR/%{_base}-v%{version}/%{_base}-v%{version}-linux-%{_node_arch}.tar.gz .
