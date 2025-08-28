@@ -112,6 +112,7 @@ fi
     --shared-openssl-includes=%{_includedir} \
     --shared-zlib \
     --shared-zlib-includes=%{_includedir}
+    --without-snapshot
 make binary %{?_smp_mflags}
 
 pushd $RPM_SOURCE_DIR
