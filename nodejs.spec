@@ -36,11 +36,12 @@ BuildRequires: zlib-devel
 %{?el5:BuildRequires: python3}
 %{?el5:BuildRequires: redhat-rpm-config}
 
-Patch0: node-js.centos5.configure.patch
-Patch1: node-js.centos5.gyp.patch
-Patch2: node-js.centos5.icu.patch
-Patch3: node-js.v8_inspector.gyp.patch
-Patch4: node-js.node.gyp-python3.patch
+#Patch0: node-js.centos5.configure.patch
+#Patch1: node-js.centos5.gyp.patch
+#Patch2: node-js.centos5.icu.patch
+#Patch3: node-js.v8_inspector.gyp.patch
+#Patch4: node-js.node.gyp-python3.patch
+Patch5: node-js.v8-stack-glibc234.patch
 
 %description
 Node.js is a server-side JavaScript environment that uses an asynchronous event-driven model.
@@ -88,6 +89,11 @@ rm -rf $RPM_SOURCE_DIR/%{_base}-v%{version}
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%endif
+
+# Apply V8 stack patch for modern glibc (Amazon Linux 2023, etc.)
+%ifarch x86_64
+%patch5 -p1
 %endif
 
 %build
