@@ -41,7 +41,7 @@ BuildRequires: zlib-devel
 #Patch2: node-js.centos5.icu.patch
 #Patch3: node-js.v8_inspector.gyp.patch
 #Patch4: node-js.node.gyp-python3.patch
-Patch5: node-js.v8-stack-glibc234.patch
+#Patch5: node-js.v8-stack-glibc234.patch
 
 %description
 Node.js is a server-side JavaScript environment that uses an asynchronous event-driven model.
@@ -91,11 +91,6 @@ rm -rf $RPM_SOURCE_DIR/%{_base}-v%{version}
 %patch4 -p1
 %endif
 
-# Apply V8 stack patch for modern glibc (Amazon Linux 2023, etc.)
-%ifarch x86_64
-%patch5 -p1
-%endif
-
 %build
 %if 0%{?rhel} == 5
 export PYTHON=python2.7
@@ -118,8 +113,9 @@ fi
     --shared-openssl-includes=%{_includedir} \
     --shared-zlib \
     --shared-zlib-includes=%{_includedir} \
-    --without-node-snapshot
-make %{?_smp_mflags}
+    --without-node-snapshot \
+    --verbose
+make %{?_smp_mflags} LDFLAGS="-Wl,--no-as-needed"
 
 pushd $RPM_SOURCE_DIR
 mv $RPM_BUILD_DIR/%{_base}-v%{version}/%{_base}-v%{version}-linux-%{_node_arch}.tar.gz .
