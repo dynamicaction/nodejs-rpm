@@ -1,0 +1,11 @@
+--- a/tools/v8_gypfiles/v8.gyp.orig	2024-01-01 00:00:00.000000000 +0000
++++ b/tools/v8_gypfiles/v8.gyp	2024-01-01 00:00:01.000000000 +0000
+@@ -2026,7 +2026,7 @@
+             ],
+           }, { # 'OS!="win"'
+             'conditions': [
+-              ['_toolset == "host" and host_arch == "x64" or _toolset == "target" and target_arch=="x64"', {
++              ['target_arch=="x64"', {
+                 'sources': [
+                   '<(V8_ROOT)/src/heap/base/asm/x64/push_registers_asm.cc',
+                 ],
