@@ -15,7 +15,9 @@ OpenSSL, zlib and libuv. The older kazuhisya-based branches (`v12.x` to
   system brotli and ignores `deps/brotli`. Node's Brotli CVE fixes land in
   `deps/brotli`, so a shared build ships the version number without the fix.
 - **Release `0.editedN`.** It sorts below Amazon's `-1` build of the same
-  version, so a normal `dnf upgrade` replaces ours once Amazon catches up.
+  version. That alone does not move hosts to Amazon's build: shared-al2023 has
+  repo priority 1 and dnf upgrades within the highest-priority repo first. To
+  switch, pin Amazon's full version-release and delete ours from the repo.
 - **Patches.** Amazon's patches that the target version does not yet contain.
   Each one's spec comment says when it can be dropped.
 
@@ -46,6 +48,17 @@ puppet repo), so the RPMs link against the same libraries.
 
 ## Publishing
 
-Copy `RPMS/x86_64/*.rpm` and `RPMS/noarch/*.rpm` into `shared-al2023` on
-repo1.dev1, then pin `nodejs::version` and `nodejs::npm_version` in the
-releasever hieradata.
+Publish every runtime RPM (skip `debuginfo` and `debugsource`). dnf installs
+`-docs` and `-full-i18n` as weak dependencies, so leaving them out pairs our
+node with Amazon's older subpackages. Same procedure as PFM-1890; noarch RPMs
+go in `x86_64/` too:
+
+```bash
+# on repo1.dev1 (Amazon Linux 2)
+D=/srv/yum/shared-al2023/x86_64
+sudo mv *.rpm $D/ && sudo chown jenkins:jenkins $D/nodejs22-*edited* $D/v8-*edited*
+sudo su -s /bin/bash jenkins -c "createrepo --update $D/"
+```
+
+Then pin `nodejs::version` and `nodejs::npm_version` in the releasever
+hieradata. Hosts refresh metadata within 120 s.
