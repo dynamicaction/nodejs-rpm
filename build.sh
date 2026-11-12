@@ -4,7 +4,8 @@
 # so the packages link against the same system libraries.
 #
 # Usage: ./build.sh <releasever, e.g. 2023.12.20260803> [work dir]
-# Needs docker on x86_64 (build1.dev1: run with sudo). Takes ~75 min on 6 CPUs.
+# Needs docker on x86_64 (build1.dev1: run with sudo). 22.23.5 took 2.5 h on
+# build1.dev1 (t3a.2xlarge, 6 CPUs), most of it compiling V8.
 set -euo pipefail
 
 releasever=${1:?usage: $0 <releasever> [work dir]}

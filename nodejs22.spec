@@ -48,7 +48,7 @@
 %global nodejs_epoch 1
 %global nodejs_major 22
 %global nodejs_minor 23
-%global nodejs_patch 4
+%global nodejs_patch 5
 # nodejs_soversion - from NODE_MODULE_VERSION in src/node_version.h
 %global nodejs_soversion 127
 %global nodejs_abi %{nodejs_soversion}
@@ -82,7 +82,7 @@
 %global c_ares_version 1.34.9
 
 # llhttp - from deps/llhttp/include/llhttp.h
-%global llhttp_version 9.4.3
+%global llhttp_version 9.4.4
 
 # libuv - from deps/uv/include/uv/version.h
 %global libuv_version 1.51.0
@@ -136,7 +136,7 @@
 %global histogram_version 0.11.8
 
 # sqlite – from deps/sqlite/sqlite3.h
-%global sqlite_version 3.53.4
+%global sqlite_version 3.54.1
 
 
 Name: nodejs%{nodejs_pkg_major}
@@ -1076,6 +1076,11 @@ end
 
 
 %changelog
+* Thu Nov 12 2026 Veselin Atanasov <veselin.atanasov@edited.com> - 22.23.5-0.edited1.amzn2023
+- Local rebuild: update to 22.23.5 (Node.js November 2026 security release)
+  ahead of the Amazon Linux package (PFM-4629)
+- Bundled llhttp 9.4.4 and sqlite 3.54.1 come from the new tarball
+
 * Fri Oct 23 2026 Fergus McWalters <fergus.mcwalters@edited.com> - 22.23.4-0.edited1.amzn2023
 - Local rebuild: update to 22.23.4 ahead of the Amazon Linux package
 - Drop patches fixed upstream by bundled c-ares 1.34.9, sqlite 3.53.4,
